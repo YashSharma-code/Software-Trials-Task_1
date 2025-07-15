@@ -45,6 +45,7 @@ source install/setup.bash
 
 In terminal 1(Make sure to source your workspace):
 ```bash
+export GAZEBO_MODEL_PATH:=task_1/models #or your custom models folder in case of custom world
 ros2 launch turtlebot3_gazebo turtlebot3_custom_world.launch.py
 ```
 This will launch the Custom_hospital.world
@@ -60,6 +61,9 @@ world = os.path.join(
         'Custom_hospital.world'
     )
 ```
+If the following line:
+export GAZEBO_MODEL_PATH:=task_1/models #or your custom models folder in case of custom world
+does not work, you can manually copy paste your models to $HOME/.gazebo/models (In this repo the models are located in task_1/models)
 
 ### Launch SLAM Toolbox:
 In terminal 2:
