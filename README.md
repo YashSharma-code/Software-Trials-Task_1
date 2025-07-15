@@ -51,9 +51,10 @@ ros2 launch turtlebot3_gazebo turtlebot3_custom_world.launch.py
 This will launch the Custom_hospital.world
 
 If you want to launch another world just copy the .world file to task_1/src/turtlebot3_simulations/turtlebot3_gazebo/worlds
+
 & then
-change Custom_hospital.world to <your-world> file in task_1/src/turtlebot3_simulations/turtlebot3_gazebo/launch
-/turtlebot3_custom_world.launch.py in the following 
+
+change Custom_hospital.world to <your-world> file in task_1/src/turtlebot3_simulations/turtlebot3_gazebo/launch/turtlebot3_custom_world.launch.py in the following 
 ```
 world = os.path.join(
         get_package_share_directory('turtlebot3_gazebo'),
@@ -62,7 +63,9 @@ world = os.path.join(
     )
 ```
 If the following line:
+
 export GAZEBO_MODEL_PATH:=task_1/models #or your custom models folder in case of custom world
+
 does not work, you can manually copy paste your models to $HOME/.gazebo/models (In this repo the models are located in task_1/models)
 
 ### Launch SLAM Toolbox:
