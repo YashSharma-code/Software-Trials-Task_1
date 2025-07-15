@@ -18,76 +18,72 @@ Create a map of a selected environment using TurtleBot3 and perform autonomous n
 - **Gazebo (Fortress or default with Humble)**
 - **TurtleBot3 Packages**
 - **RViz2**
-- **teleop_twist_keyboard**
+- **teleop_keyboard**
 
 ---
-
-## 📦 Package Setup
-
-### 1. Clone Repositories
-
-```bash
-cd ~/ros2_ws/src
-# Clone Gazebo worlds
-git clone https://github.com/mlherd/Dataset-of-Gazebo-Worlds-Models-and-Maps.git
-# Clone TurtleBot3 packages
-git clone https://github.com/ROBOTIS-GIT/turtlebot3.git
-```
-
----
-
-### 2. Install Required Dependencies
+### Install Required Dependencies
 
 ```bash
 sudo apt update
 sudo apt install ros-humble-navigation2 ros-humble-nav2-bringup \
-                 ros-humble-slam-toolbox ros-humble-turtlebot3* \
-                 ros-humble-teleop-twist-keyboard
+                 ros-humble-slam-toolbox ros-humble-turtlebot3* 
 ```
+## 📦 Package Setup
 
-### 3. Set Environment Variables
+### 1. Clone and Build Repositories
 
-Add to your `~/.bashrc`:
-
+This will create a task1 folder which can be used as your workspace
 ```bash
-export TURTLEBOT3_MODEL=waffle_pi
-source ~/.bashrc
+git clone https://github.com/YashSharma-code/Software-Trials-Task_1.git
+cd task_1
+colcon build
+source install/setup.bash
 ```
-
----
-
-## 🌍 Select and Modify Gazebo World
-
-- Navigate to `Dataset-of-Gazebo-Worlds-Models-and-Maps/worlds/`
-- Choose **any of the first five** `.world` files.
-- Open in any editor and **remove non-static elements** (like moving people, vehicles, etc.)
-
----
-
 ## 🗺️ Mapping the Environment
 
 ### Launch Gazebo with the Selected World:
 
+In terminal 1(Make sure to source your workspace):
 ```bash
-ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py world:='absolute/path/to/your.world'
+ros2 launch turtlebot3_gazebo turtlebot3_custom_world.launch.py
+```
+This will launch the Custom_hospital.world
+
+If you want to launch another world just copy the .world file to task_1/src/turtlebot3_simulations/turtlebot3_gazebo/worlds
+& then
+change Custom_hospital.world to <your-world> file in task_1/src/turtlebot3_simulations/turtlebot3_gazebo/launch
+/turtlebot3_custom_world.launch.py in the following 
+```
+world = os.path.join(
+        get_package_share_directory('turtlebot3_gazebo'),
+        'worlds',
+        'Custom_hospital.world'
+    )
 ```
 
 ### Launch SLAM Toolbox:
-
+In terminal 2:
 ```bash
-ros2 launch turtlebot3_cartographer cartographer.launch.py use_sim_time:=true
+
+ros2 launch slam_toolbox online_async_launch.py use_sim_time:=True
+
 ```
 
 ### Teleoperate the Robot:
-
+In terminal 3:
 ```bash
-ros2 run teleop_twist_keyboard teleop_twist_keyboard
+ros2 run turtlebot3_teleop teleop_keyboard
 ```
 
+### Launch rviz2 to visualize your current map
+In terminal 4:
+```bash
+rviz2
+```
 ### Save the Map:
 
 After covering the environment:
-
+In terminal 5:
 ```bash
 ros2 run nav2_map_server map_saver_cli -f ~/map/my_map
 ```
@@ -110,37 +106,6 @@ ros2 run rviz2 rviz2
 
 - Use **2D Pose Estimate** to set initial pose
 - Use **2D Nav Goal** to define destination
-
----
-
-## 🎬 Demonstration Video
-
-The video [`working.mp4`](./working.mp4) shows:
-
-- Mapping via teleoperation
-- Saving the map
-- Starting navigation stack
-- Sending goal in RViz
-- Terminal commands
-
-⏺️ **All terminal commands are clearly shown in the video.**
-
----
-
-## 📁 Directory Structure
-
-```
-task_3/
-├── src/
-│   ├── turtlebot3/...
-│   ├── Dataset-of-Gazebo-Worlds-Models-and-Maps/...
-│   └── other custom packages
-├── map/
-│   ├── my_map.yaml
-│   └── my_map.pgm
-├── working.mp4
-└── README.md
-```
 
 ---
 
